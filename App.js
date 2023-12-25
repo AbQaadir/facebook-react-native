@@ -1,14 +1,20 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Image } from 'react-native';
+import LikeImg from './assets//images/like.png';
+import {
+	Entypo,
+	AntDesign,
+	FontAwesome5,
+	MaterialCommunityIcons,
+} from "@expo/vector-icons";
 
 const post = {
 	id: "p1",
 	createdAt: "19 m",
 	User: {
 		id: "u1",
-		image:
-			"https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/zuck.jpeg",
-		name: "Vadim Savin",
+		image: "https://scontent.fcmb4-2.fna.fbcdn.net/v/t39.30808-1/326991224_1940801912780958_7344187069892566927_n.jpg?stp=dst-jpg_p240x240&_nc_cat=101&ccb=1-7&_nc_sid=5740b7&_nc_eui2=AeEYFABt6ADKXKw2Pq6--lmwHkhWtdahLGceSFa11qEsZ50z9OH2ZEMTYQDtYxmPM3Sl9dR3QDlHW96ipx7kvw-n&_nc_ohc=Sis1-VML0nEAX9gC-SG&_nc_ht=scontent.fcmb4-2.fna&oh=00_AfB9vFd6xLoGZ37h133CStm4eZu9j1lwr5VrGs-JG3J05A&oe=658E093F",
+		name: "Abdul Qaadir",
 	},
 	description:
 		"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
@@ -25,26 +31,74 @@ export default function App() {
 			<View style={styles.post}>
 				{/* Header */}
 				<View style={styles.postHeaderContainer}>
-					{/* <Image
-						source={{ uri: post.User.image }}
-						style={styles.postProfilePicture}
-					/>
+					<View style={styles.profileImage}>
+						<Image
+							source={{ uri: post.User.image }}
+							style={styles.postProfilePicture}
+						/>
+					</View>
 					<View style={styles.postHeaderNames}>
-						<Text style={styles.postHeaderNames}>{post.User.name}</Text>
+						<Text style={styles.postHeaderName}>{post.User.name}</Text>
 						<Text style={styles.postHeaderTime}>{post.createdAt}</Text>
-					</View> */}
-
-					
+					</View>
+					<View style={styles.postHeaderRight}>
+						<Entypo name="dots-three-vertical" size={24} color="black" />
+					</View>
 				</View>
+
 
 				{/* Body */}
 				<View style={styles.postBody}>
+
+					{post.description && (
+						<View style={styles.postCaption}>
+							<Text style={styles.postDescription}>{post.description}</Text>
+						</View>
+					)}
+
+					{post.image && (
+						<Image
+							source={{ uri: post.image }}
+							style={styles.postImage}
+							resizeMode="cover"
+						/>
+					)}
+
+
 
 				</View>
 
 				{/* Footer */}
 				<View style={styles.postFooter}>
 
+					<View style={styles.footerTop}>
+						<View style={styles.postFooterLeft}>
+							<Image
+								source={LikeImg}
+								style={styles.postFooterLikeImg}
+							/>
+							<Text style={styles.postFooterLikeText}>Elone Musk and {post.numberOfLikes} others</Text>
+						</View>
+						<View style={styles.postFooterRight}>
+							<Text style={styles.postFooterShareText}>{post.numberOfShares} Shares</Text>
+						</View>
+					</View>
+
+
+					<View style={styles.footerBottom}>
+						<View style={styles.footerBottomLeft}>
+							<AntDesign name="like2" size={24} color="gray" />
+							<Text style={styles.footerBottomLeftText}>Like</Text>
+						</View>
+						<View style={styles.footerBottomRight}>
+							<FontAwesome5 name="comment" size={24} color="gray" />
+							<Text style={styles.footerBottomRightText}>Comment</Text>
+						</View>
+						<View style={styles.footerBottomRight}>
+							<MaterialCommunityIcons name="share-outline" size={24} color="gray" />
+							<Text style={styles.footerBottomRightText}>Share</Text>
+						</View>
+					</View>
 				</View>
 			</View>
 
@@ -62,123 +116,136 @@ const styles = StyleSheet.create({
 	},
 
 
-	// post: {
-	//   marginVertical: 15,
-	// },
+	post: {
+		width: "100%",
+	},
 
-	// postHeaderContainer: {
-	//   flexDirection: "row",
-	//   justifyContent: "space-between",
-	//   alignItems: "center",
-	//   marginHorizontal: 15,
-	// },
+	postHeaderContainer: {
+		flexDirection: "row",
+		alignItems: "center",
+		marginHorizontal: 15,
+	},
 
-	// postProfilePicture: {
-	//   width: 50,
-	//   height: 50,
-	//   borderRadius: 25,
-	// },
+	profileImage: {
+		width: 60,
+		height: 50,
+		borderRadius: 25,
+	},
 
-	// postHeaderNames: {
-	//   flexDirection: "row",
-	// },
+	postProfilePicture: {
+		width: 50,
+		height: 50,
+		borderRadius: 25,
+	},
 
-	// postHeaderName: {
-	//   marginRight: 5,
-	//   fontWeight: "bold",
-	// },
+	postHeaderNames: {
+		flexDirection: "column",
+	},
 
-	// postHeaderTime: {
-	//   fontWeight: "bold",
-	//   color: "#ccc",
-	// },
+	postHeaderName: {
+		fontWeight: "bold",
+	},
 
-	// postBody: {
-	//   marginTop: 15,
-	// },
+	postHeaderTime: {
+		fontWeight: "bold",
+		color: "gray",
+	},
 
-	// postFooter: {
-	//   marginHorizontal: 15,
-	// },
+	postHeaderRight: {
+		flex: 1,
+		alignItems: "flex-end",
+	},
 
-	// postFooterLeft: {
-	//   flexDirection: "row",
-	//   justifyContent: "space-between",
-	//   width: 120,
-	// },
+	postBody: {
+		marginVertical: 5,
+	},
 
-	// postFooterRight: {
-	//   flexDirection: "row",
-	//   justifyContent: "space-between",
-	//   alignItems: "center",
-	//   width: 120,
-	// },
+	postCaption: {
+		marginHorizontal: 15,
+		marginBottom: 5,
+	},
 
-	// postFooterText: {
-	//   marginRight: 5,
-	// },
+	postDescription: {
+		lineHeight: 18,
+		letterSpacing: 0.3,
+	},
 
-	// postImage: {
-	//   width: "100%",
-	//   height: 200,
-	//   marginVertical: 15,
-	// },
+	postImage: {
+		marginTop: 5,
+		width: "100%",
+		aspectRatio: 1,
+	},
 
-	// postCaption: {
-	//   marginHorizontal: 15,
-	// },
+	postFooter: {
+		marginHorizontal: 15,
+	},
 
-	// postCaption: {
-	//   marginVertical: 3,
-	// },
+	footerTop: {
+		flexDirection: "row",
+		justifyContent: "space-between",
+		alignItems: "center",
+	},
 
-	// postCaptionName: {
-	//   marginRight: 5,
-	//   fontWeight: "bold",
-	// },
+	postFooterLeft: {
+		flexDirection: "row",
+		alignItems: "center",
+	},
 
-	// postLikes: {
-	//   fontWeight: "bold",
-	//   marginHorizontal: 15,
-	// },
+	postFooterLikeImg: {
+		width: 20,
+		height: 20,
+		resizeMode: "contain",
+	},
 
-	// postTime: {
-	//   marginTop: 5,
-	//   marginHorizontal: 15,
-	//   color: "#ccc",
-	//   fontWeight: "bold",
-	// },
+	postFooterLikeText: {
+		marginLeft: 5,
+		fontSize: 12,
+	},
 
-	// postComments: {
-	//   marginTop: 5,
-	//   marginHorizontal: 15,
-	// },
+	postFooterRight: {
+	},
 
-	// postComment: {
-	//   flexDirection: "row",
-	//   marginBottom: 5,
-	// },
+	postFooterShareText: {
+		fontSize: 12,
+		color: "gray",
+	},
 
-	// postCommentName: {
-	//   marginRight: 5,
-	//   fontWeight: "bold",
-	// },
+	footerBottom: {
+		flexDirection: "row",
+		borderTopWidth: 1,
+		borderTopColor: "lightgray",
+		paddingTop: 8,
+		justifyContent: "space-around",
+		marginTop: 10,
+	},
 
-	// postCommentText: {
-	//   marginRight: 5,
-	// },
+	footerBottomLeft: {
+		flexDirection: "row",
+		alignItems: "center",
+	},
 
-	// postCommentLikes: {
-	//   fontWeight: "bold",
-	// },
+	footerBottomLeftText: {
+		marginLeft: 5,
+		color: "gray",
+	},
 
-	// postCommentLikesName: {
-	//   marginRight: 5,
-	//   fontWeight: "bold",
-	// },
+	footerBottomRight: {
+		flexDirection: "row",
+		alignItems: "center",
+	},
 
-	// postCommentLikesText: {
-	//   marginRight: 5,
-	// },
+	footerBottomRightText: {
+		marginLeft: 5,
+		color: "gray",
+	},
+
+
+
+
+
+
+
+
+
 
 });
